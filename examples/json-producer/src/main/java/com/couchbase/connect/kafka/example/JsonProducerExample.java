@@ -18,6 +18,8 @@ package com.couchbase.connect.kafka.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.kafka.clients.CommonClientConfigs;
+import org.apache.kafka.common.config.SslConfigs;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -56,6 +58,8 @@ public class JsonProducerExample {
   private static Producer<String, byte[]> createProducer() {
     Properties config = new Properties();
     config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+    config.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SSL");
+    config.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, "/tmp/kafka.client.truststore.jks");
     config.put(ProducerConfig.CLIENT_ID_CONFIG, "CouchbaseJsonProducerExample");
     config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
